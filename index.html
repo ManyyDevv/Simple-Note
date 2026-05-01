@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>SimpleNote.fr</title>
+<link rel="stylesheet" href="style.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<!-- ▌SIDEBAR ▐ -->
+<aside id="sidebar">
+  <div class="sb-brand">
+    <div class="brand-icon">
+      <svg viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="var(--accent)"/><path d="M7 9h14M7 14h9M7 19h11" stroke="#0a0a0c" stroke-width="2" stroke-linecap="round"/></svg>
+    </div>
+    <span class="brand-name">SimpleNote.FR</span>
+    <button id="theme-btn" class="icon-pill" title="Thème (T)">
+      <svg id="theme-icon-dark" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" fill="currentColor"/></svg>
+      <svg id="theme-icon-light" viewBox="0 0 20 20" style="display:none"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill="currentColor"/></svg>
+    </button>
+  </div>
+
+  <div class="sb-search">
+    <svg viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M15 15l-3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    <input id="search-input" placeholder="Rechercher…" autocomplete="off" spellcheck="false"/>
+    <button id="search-clear" class="hidden">✕</button>
+  </div>
+
+  <nav class="sb-nav">
+    <button class="nav-item active" data-page="home">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M3 8.5L10 3l7 5.5V17a1 1 0 01-1 1H4a1 1 0 01-1-1V8.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M7.5 18V13h5v5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <span>Accueil</span>
+    </button>
+    <button class="nav-item" data-page="create">
+      <svg viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="currentColor" stroke-width="1.5"/><path d="M10 7v6M7 10h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>Nouvelle note</span>
+      <kbd>⌘N</kbd>
+    </button>
+    <button class="nav-item" data-page="folders">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M2 6a2 2 0 012-2h4l2 2h6a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+      <span>Dossiers</span>
+    </button>
+    <button class="nav-item" data-page="stats">
+      <svg viewBox="0 0 20 20" fill="none"><path d="M4 14v-3M8 14V8M12 14v-5M16 14V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>Statistiques</span>
+    </button>
+  </nav>
+
+  <div class="sb-section-title">Dossiers</div>
+  <div id="sb-folders"></div>
+  <button class="sb-add-folder" id="add-folder-btn">
+    <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    Nouveau dossier
+  </button>
+
+  <div class="sb-section-title" style="margin-top:12px">Tags</div>
+  <div id="sb-tags"></div>
+
+  <div class="sb-section-title" style="margin-top:12px">Trier</div>
+  <select id="sort-select">
+    <option value="date-desc">Plus récent</option>
+    <option value="date-asc">Plus ancien</option>
+    <option value="title-asc">Titre A→Z</option>
+    <option value="pinned">Épinglées d'abord</option>
+  </select>
+
+  <div class="sb-footer">
+    <span id="note-count">0 note</span>
+    <span id="autosave-badge" class="hidden">✓ Sauvegardé</span>
+  </div>
+</aside>
+
+<!-- ▌MAIN ▐ -->
+<div id="main">
+
+  <!-- Mobile topbar -->
+  <div id="topbar">
+    <button id="hamburger"><span></span><span></span><span></span></button>
+    <span>SimpleNote</span>
+  </div>
+
+  <!-- ═══ PAGE HOME ═══ -->
+  <section class="page" id="page-home">
+    <header class="page-hd">
+      <div>
+        <h1 id="home-title">Toutes les notes</h1>
+        <p id="home-sub" class="page-sub">Retrouvez toutes vos idées.</p>
+      </div>
+      <div class="hd-actions">
+        <button class="icon-pill" id="btn-grid" title="Grille">
+          <svg viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="1" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="1" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="6" height="6" rx="1.5" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+        <button class="icon-pill" id="btn-list" title="Liste">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M5 4h9M5 8h9M5 12h9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="2" cy="4" r="1" fill="currentColor"/><circle cx="2" cy="8" r="1" fill="currentColor"/><circle cx="2" cy="12" r="1" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div id="notes-container">
+      <div id="empty-state">
+        <svg viewBox="0 0 120 100" fill="none"><rect x="15" y="10" width="90" height="80" rx="12" fill="var(--surface2)" stroke="var(--border)" stroke-width="1.5"/><path d="M35 38h50M35 50h34M35 62h42" stroke="var(--border)" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <p>Aucune note pour l'instant</p>
+        <button class="btn-primary" onclick="goToPage('create')">Créer une note</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PAGE CREATE/EDIT ═══ -->
+  <section class="page hidden" id="page-create">
+    <header class="page-hd">
+      <div>
+        <h1 id="form-title">Nouvelle note</h1>
+        <p class="page-sub">Capturez votre idée.</p>
+      </div>
+      <div class="hd-actions">
+        <button class="icon-pill" id="focus-btn" title="Mode focus (F)">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M1 5V2h3M12 2h3v3M15 11v3h-3M4 14H1v-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <div id="draft-pill" class="draft-pill hidden">
+          <svg viewBox="0 0 12 12" fill="none"><circle cx="6" cy="6" r="5" stroke="currentColor" stroke-width="1.2"/><path d="M6 3.5v2.5l1.5 1" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+          Brouillon
+        </div>
+      </div>
+    </header>
+
+    <div id="editor-layout">
+      <!-- META PANEL -->
+      <div id="meta-panel">
+        <div class="field-group">
+          <label>Titre <span class="req">*</span></label>
+          <input id="f-title" type="text" placeholder="Un titre accrocheur…" maxlength="80" autocomplete="off"/>
+          <div class="field-bar"></div>
+          <span class="field-count" id="f-title-count">0/80</span>
+        </div>
+        <div class="field-group">
+          <label>Auteur <span class="req">*</span></label>
+          <input id="f-author" type="text" placeholder="Votre pseudo…" maxlength="40" autocomplete="off"/>
+          <div class="field-bar"></div>
+        </div>
+        <div class="field-group">
+          <label>Description <span class="req">*</span></label>
+          <input id="f-desc" type="text" placeholder="Une phrase de résumé…" maxlength="160" autocomplete="off"/>
+          <div class="field-bar"></div>
+          <span class="field-count" id="f-desc-count">0/160</span>
+        </div>
+        <div class="field-group">
+          <label>Tags <span class="hint">virgule</span></label>
+          <input id="f-tags" type="text" placeholder="travail, idée, perso…"/>
+          <div class="field-bar"></div>
+          <div id="f-tags-preview"></div>
+        </div>
+        <div class="field-group">
+          <label>Dossier</label>
+          <select id="f-folder">
+            <option value="">— Aucun —</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Couleur</label>
+          <div id="f-colors" class="color-row">
+            <button class="cdot active" data-c="gold"     style="--dc:#e8c87a"></button>
+            <button class="cdot"        data-c="rose"     style="--dc:#e07a7a"></button>
+            <button class="cdot"        data-c="mint"     style="--dc:#7adbb8"></button>
+            <button class="cdot"        data-c="sky"      style="--dc:#7aaee8"></button>
+            <button class="cdot"        data-c="lavender" style="--dc:#b07ae8"></button>
+            <button class="cdot"        data-c="peach"    style="--dc:#e8a07a"></button>
+          </div>
+        </div>
+        <div class="field-group">
+          <label class="toggle-label">
+            <input type="checkbox" id="f-lock" class="visually-hidden"/>
+            <span class="toggle-track"><span class="toggle-thumb"></span></span>
+            Protéger par mot de passe
+          </label>
+          <div id="f-pw-wrap" class="hidden" style="margin-top:8px">
+            <input id="f-pw" type="password" placeholder="Mot de passe…"/>
+            <div class="field-bar"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- EDITOR PANEL -->
+      <div id="editor-panel">
+        <!-- TOOLBAR -->
+        <div id="toolbar">
+          <div class="tb-group">
+            <button class="tb" data-cmd="bold"       title="Gras Ctrl+B"><svg viewBox="0 0 16 16"><path d="M4 3h5a3 3 0 010 6H4zM4 9h5.5a3.5 3.5 0 010 7H4z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg></button>
+            <button class="tb" data-cmd="italic"     title="Italique Ctrl+I"><svg viewBox="0 0 16 16"><line x1="10" y1="3" x2="6" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="3" x2="13" y2="3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="13" x2="9" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            <button class="tb" data-cmd="underline"  title="Souligné Ctrl+U"><svg viewBox="0 0 16 16"><path d="M3 3v5a5 5 0 0010 0V3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="2" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            <button class="tb" data-cmd="strikeThrough" title="Barré"><svg viewBox="0 0 16 16"><path d="M5 11c0 1.5 1.2 2.5 3 2.5s3-1 3-2.5" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M11 5c-.4-1.2-1.5-2-3-2-2 0-3 1.2-3 2.5 0 .9.4 1.7 1.2 2" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="2" y1="8.5" x2="14" y2="8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb tb-text" data-cmd="h1" title="Titre 1">H1</button>
+            <button class="tb tb-text" data-cmd="h2" title="Titre 2">H2</button>
+            <button class="tb tb-text" data-cmd="h3" title="Titre 3">H3</button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb" data-cmd="insertUnorderedList" title="Liste à puces"><svg viewBox="0 0 16 16" fill="none"><circle cx="3" cy="5" r="1.2" fill="currentColor"/><circle cx="3" cy="9" r="1.2" fill="currentColor"/><circle cx="3" cy="13" r="1.2" fill="currentColor"/><path d="M6 5h8M6 9h8M6 13h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            <button class="tb" data-cmd="insertOrderedList" title="Liste numérotée"><svg viewBox="0 0 16 16" fill="none"><path d="M2 4h1.5V7M2 7h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/><path d="M2 10h3l-3 3.5h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 5h8M7 9h8M7 13h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            <button class="tb" data-cmd="blockquote" title="Citation"><svg viewBox="0 0 16 16" fill="none"><path d="M2 6h4v4H2zM9 6h5v4H9z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/><path d="M6 10c0 2-2 2-2 2M13 10c0 2-2 2-2 2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+            <button class="tb" data-cmd="code" title="Code inline"><svg viewBox="0 0 16 16" fill="none"><path d="M5 5L2 8l3 3M11 5l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+            <button class="tb" data-cmd="hr" title="Séparateur"><svg viewBox="0 0 16 16" fill="none"><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="2 2"/></svg></button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb" data-cmd="createLink" title="Lien"><svg viewBox="0 0 16 16" fill="none"><path d="M7 9a3.5 3.5 0 005 0l2-2a3.5 3.5 0 00-5-5L7.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M9 7a3.5 3.5 0 00-5 0L2 9a3.5 3.5 0 005 5L8.5 12.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+            <button class="tb" data-cmd="removeFormat" title="Effacer le format"><svg viewBox="0 0 16 16" fill="none"><path d="M3 3h10M7 3l-2 10M10 10l3 3M10 13l3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="tb-sep"></div>
+          <div class="tb-group">
+            <button class="tb" data-cmd="undo" title="Annuler Ctrl+Z"><svg viewBox="0 0 16 16" fill="none"><path d="M2 6l4-4v3c5 0 8 3 8 8-1.5-3-4-5-8-5v3L2 6z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+            <button class="tb" data-cmd="redo" title="Rétablir Ctrl+Y"><svg viewBox="0 0 16 16" fill="none"><path d="M14 6l-4-4v3C5 5 2 8 2 13c1.5-3 4-5 8-5v3l4-5z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+          </div>
+          <div class="tb-spacer"></div>
+          <div class="tb-stats">
+            <span id="tb-words">0 mot</span>
+            <span class="tb-dot">·</span>
+            <span id="tb-time">~0 min</span>
+          </div>
+        </div>
+
+        <!-- EDITOR BODY -->
+        <div
+          id="editor"
+          contenteditable="true"
+          spellcheck="true"
+          data-ph="Écrivez votre note ici…"
+        ></div>
+      </div>
+    </div>
+
+    <!-- FORM FOOTER -->
+    <div id="form-footer">
+      <div id="form-error" class="hidden">Remplissez tous les champs requis.</div>
+      <div class="form-btns">
+        <button class="btn-ghost" onclick="cancelForm()">Annuler</button>
+        <button class="btn-primary" id="submit-btn" onclick="submitNote()">
+          <svg viewBox="0 0 16 16" fill="none"><path d="M14 10v3a1 1 0 01-1 1H3a1 1 0 01-1-1v-3M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PAGE FOLDERS ═══ -->
+  <section class="page hidden" id="page-folders">
+    <header class="page-hd">
+      <div><h1>Dossiers</h1><p class="page-sub">Organisez vos notes.</p></div>
+      <button class="btn-primary" onclick="openFolderModal()">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Nouveau
+      </button>
+    </header>
+    <div id="folders-grid"></div>
+  </section>
+
+  <!-- ═══ PAGE STATS ═══ -->
+  <section class="page hidden" id="page-stats">
+    <header class="page-hd"><div><h1>Statistiques</h1><p class="page-sub">Vue d'ensemble.</p></div></header>
+    <div id="stats-cards"></div>
+    <div id="stats-charts">
+      <div class="chart-card"><h3>Tags</h3><div id="chart-tags"></div></div>
+      <div class="chart-card"><h3>Activité (7j)</h3><div id="chart-activity"></div></div>
+    </div>
+  </section>
+
+  <!-- ═══ PAGE DETAIL ═══ -->
+  <section class="page hidden" id="page-detail">
+    <header class="detail-hd">
+      <button class="btn-ghost back-btn" onclick="goToPage('home')">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Retour
+      </button>
+      <div class="detail-actions">
+        <button class="icon-pill" id="pin-btn"     onclick="togglePin()"><svg viewBox="0 0 16 16" fill="none"><path d="M9.5 2L14 6.5l-5 5-1.5-1.5L10 7.5 8.5 6 5.5 9l-1.5-1.5 5-5.5zM2 14l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span id="pin-label">Épingler</span></button>
+        <button class="icon-pill" id="history-btn" onclick="showHistory()"><svg viewBox="0 0 16 16" fill="none"><path d="M1.5 8A6.5 6.5 0 108 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M1.5 3v5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 5v3.5l2 1.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg><span>Historique</span></button>
+        <button class="icon-pill"                  onclick="editCurrentNote()"><svg viewBox="0 0 16 16" fill="none"><path d="M11 2l3 3-8 8H3v-3l8-8z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Modifier</span></button>
+        <button class="icon-pill"                  onclick="exportNote()"><svg viewBox="0 0 16 16" fill="none"><path d="M2 11v2a1 1 0 001 1h10a1 1 0 001-1v-2M8 2v8M5 7l3 3 3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Exporter</span></button>
+        <button class="btn-danger"                 onclick="deleteCurrentNote()"><svg viewBox="0 0 16 16" fill="none"><path d="M2 4h12M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1M13 4l-.87 9.14A2 2 0 0110.14 15H5.86a2 2 0 01-1.996-1.86L3 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>Supprimer</button>
+      </div>
+    </header>
+
+    <div id="detail-card">
+      <div id="detail-meta-row">
+        <span id="d-author"></span>
+        <span class="meta-dot">·</span>
+        <span id="d-date"></span>
+        <span class="meta-dot">·</span>
+        <span id="d-words"></span>
+        <span class="meta-dot">·</span>
+        <span id="d-time"></span>
+        <span id="d-folder-badge"></span>
+      </div>
+      <div id="d-tags"></div>
+      <h2 id="d-title"></h2>
+      <p id="d-desc"></p>
+
+      <div id="content-tabs">
+        <button class="ctab active" data-tab="render">Rendu</button>
+        <button class="ctab" data-tab="source">Source HTML</button>
+        <div class="ctab-spacer"></div>
+        <button class="copy-btn" id="copy-btn" onclick="copyContent()">
+          <svg viewBox="0 0 16 16" fill="none"><rect x="5" y="5" width="9" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M3 11V3a1 1 0 011-1h8" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+          Copier
+        </button>
+      </div>
+
+      <div id="d-content-render" class="d-content"></div>
+      <pre id="d-content-source" class="d-content hidden"></pre>
+    </div>
+  </section>
+
+</div><!-- /main -->
+
+<!-- ▌MODALS ▐ -->
+
+<!-- Dossier -->
+<div class="modal-bg hidden" id="modal-folder">
+  <div class="modal">
+    <div class="modal-hd"><h3 id="modal-folder-title">Nouveau dossier</h3><button onclick="closeModal('modal-folder')">✕</button></div>
+    <div class="field-group"><label>Nom</label><input id="folder-name" type="text" placeholder="Mon dossier…" maxlength="40"/><div class="field-bar"></div></div>
+    <div class="field-group"><label>Couleur</label>
+      <div id="folder-colors" class="color-row">
+        <button class="cdot active" data-c="gold" style="--dc:#e8c87a"></button>
+        <button class="cdot" data-c="rose" style="--dc:#e07a7a"></button>
+        <button class="cdot" data-c="mint" style="--dc:#7adbb8"></button>
+        <button class="cdot" data-c="sky" style="--dc:#7aaee8"></button>
+        <button class="cdot" data-c="lavender" style="--dc:#b07ae8"></button>
+        <button class="cdot" data-c="peach" style="--dc:#e8a07a"></button>
+      </div>
+    </div>
+    <div class="modal-ft"><button class="btn-ghost" onclick="closeModal('modal-folder')">Annuler</button><button class="btn-primary" onclick="saveFolder()">Créer</button></div>
+  </div>
+</div>
+
+<!-- Mot de passe -->
+<div class="modal-bg hidden" id="modal-pw">
+  <div class="modal">
+    <div class="modal-hd"><h3>🔒 Note protégée</h3><button onclick="closeModal('modal-pw');goToPage('home')">✕</button></div>
+    <p class="modal-desc">Entrez le mot de passe pour lire cette note.</p>
+    <div class="field-group"><input id="unlock-pw" type="password" placeholder="Mot de passe…"/><div class="field-bar"></div></div>
+    <div id="pw-error" class="hidden form-err">Mot de passe incorrect.</div>
+    <div class="modal-ft"><button class="btn-ghost" onclick="closeModal('modal-pw');goToPage('home')">Annuler</button><button class="btn-primary" onclick="unlockNote()">Déverrouiller</button></div>
+  </div>
+</div>
+
+<!-- Historique -->
+<div class="modal-bg hidden" id="modal-history">
+  <div class="modal modal-lg">
+    <div class="modal-hd"><h3>Historique des versions</h3><button onclick="closeModal('modal-history')">✕</button></div>
+    <div id="history-list"></div>
+  </div>
+</div>
+
+<!-- Lien -->
+<div class="modal-bg hidden" id="modal-link">
+  <div class="modal">
+    <div class="modal-hd"><h3>Insérer un lien</h3><button onclick="closeModal('modal-link')">✕</button></div>
+    <div class="field-group"><label>Texte</label><input id="link-text" type="text" placeholder="Texte du lien…"/><div class="field-bar"></div></div>
+    <div class="field-group"><label>URL</label><input id="link-url" type="url" placeholder="https://…"/><div class="field-bar"></div></div>
+    <div class="modal-ft"><button class="btn-ghost" onclick="closeModal('modal-link')">Annuler</button><button class="btn-primary" onclick="insertLink()">Insérer</button></div>
+  </div>
+</div>
+
+<!-- Bulle de sélection -->
+<div id="sel-bubble" class="hidden">
+  <button data-cmd="bold"><svg viewBox="0 0 16 16"><path d="M4 3h5a3 3 0 010 6H4zM4 9h5.5a3.5 3.5 0 010 7H4z" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linejoin="round"/></svg></button>
+  <button data-cmd="italic"><svg viewBox="0 0 16 16"><line x1="10" y1="3" x2="6" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="7" y1="3" x2="13" y2="3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><line x1="3" y1="13" x2="9" y2="13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+  <button data-cmd="underline"><svg viewBox="0 0 16 16"><path d="M3 3v5a5 5 0 0010 0V3" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"/><line x1="2" y1="14" x2="14" y2="14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+  <div class="sb-sep"></div>
+  <button data-cmd="h1" style="font-size:10px;font-weight:700;padding:0 6px">H1</button>
+  <button data-cmd="h2" style="font-size:10px;font-weight:700;padding:0 6px">H2</button>
+  <div class="sb-sep"></div>
+  <button data-cmd="blockquote"><svg viewBox="0 0 16 16" fill="none"><path d="M2 6h4v4H2zM9 6h5v4H9z" stroke="currentColor" stroke-width="1.3" stroke-linejoin="round"/></svg></button>
+  <button data-cmd="strikeThrough"><svg viewBox="0 0 16 16" fill="none"><line x1="2" y1="8" x2="14" y2="8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M6 5c0-1.1.9-2 3-2s3 .9 3 2M5 11c0 1.2 1 2 3 2s3-.8 3-2" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></button>
+</div>
+
+<!-- Toast -->
+<div id="toast" class="hidden"></div>
+<!-- Mobile overlay -->
+<div id="overlay" class="hidden" onclick="closeSidebar()"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
