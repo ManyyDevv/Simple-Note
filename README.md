@@ -7,9 +7,9 @@
 
 - ➣ Qui sommes-nous ?
   - ➣ Nous sommes **Simple Note.Fr** développer grâce à l'intelligence artificielle,nous avions créer grâce à l'AI,une application de note que vous n'avez jamais vu auparavant.
-    - ➣ Vous pouvez **enrengistrer des notes**,**les sauvegarder**,**créer des notes dynamiques grâce au paramètre de texte,** (comme mettre en gras etc..).
-      - ➣ **Il n'est pas obligatoire d'installer quelque chose.** Car l'application est optimisée et fonctionne sur n'importe quel ordinateur et l'application est en ligne 24/24 7/7 *(hors panne ou tout autre évennement exceptionnel pouvant atteindre au bon fonctionnement du serveur)*
-        - ➣ Les notes sont sauvegardées sur votre ordinateur.
+  - ➣ Vous pouvez **enrengistrer des notes**,**les sauvegarder**,**créer des notes dynamiques grâce au paramètre de texte,** (comme mettre en gras etc..).
+  - ➣ **Il n'est pas obligatoire d'installer quelque chose.** Car l'application est optimisée et fonctionne sur n'importe quel ordinateur et l'application est en ligne 24/24 7/7 *(hors panne ou tout autre évennement exceptionnel pouvant atteindre au bon fonctionnement du serveur)*
+  - ➣ Les notes sont sauvegardées sur votre ordinateur.
 
 
 
