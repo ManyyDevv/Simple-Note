@@ -27,7 +27,7 @@
 
 ## ➣ Finalités : ##
 Vous souhaitez des prises de notes organisées,simples,et avec de nombreuses fonctionnalités ? 
-# **FONCEZ.** # ☞ https://manyydevv.github.io/Simple-Note/
+# **Comment y accèder ?**  ☞ [Cliquez sur ce lien](https://manyydevv.github.io/Simple-Note/)
 
 
 
