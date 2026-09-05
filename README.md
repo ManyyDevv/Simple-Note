@@ -1,4 +1,4 @@
-# Simple Note.Fr #
+# Simple Note #
 
 ## Écrire comme demain. ## 
 
