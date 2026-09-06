@@ -14,7 +14,7 @@
 
 
 > [!WARNING]
-> En cas de changement de naviguateur ou de réniatilisation de l'ordinateur, les notes seront plus disponibles à moins quelles soivent exportées.
+> Une adresse mail valide et un mot de passe d'au moins 6 caractères sont requis pour la création d'un compte. 
 
 
 ### ➣ NOS AVANTAGES : ###
@@ -23,6 +23,17 @@
 - Vous êtes libre sur l'organisation,la création ou la modification de vos notes.
 - L'interface est simple et les fonctionnalités sont nombreuses et complètes.
 - Vous pouvez créer des dossiers pour mieux organiser vos notes.
+
+> [!NOTE]
+> Vos notes sont sauvegardées sur votre compte SimpleNote.
+
+
+### ➣ POURQUOI CHOISIR SIMPLE NOTE ? : ###
+- Nous avons énormément de fonctionnalités pour rendre la prise de note la plus optimisée possible.
+- Nous respectons la vie privé et aucune de vos informations ni de vos notes sont collectées.
+- Nous avons un Wiki et énormément d'aide pour tout utilisateur.
+- L'organisation sur SimpleNote est très présente : dossiers,tags,mot de passes,titres etc...
+- Nous avons des mises en formes très intéressantes : titre,gras,liens etc...
 
 
 ## ➣ Finalités : ##
